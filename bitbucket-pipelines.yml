@@ -1,0 +1,9 @@
+image: circleci/openjdk:9
+
+pipelines:
+  default:
+    - step:
+        name: Verify Maven build
+        script:
+          - mvn -e verify
+          - echo 'sync this repo with GitHub'
