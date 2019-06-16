@@ -6,4 +6,3 @@ pipelines:
         name: Verify Maven build
         script:
           - mvn -e verify
-          - echo 'sync this repo with GitHub'

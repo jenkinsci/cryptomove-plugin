@@ -6,15 +6,14 @@
 mvn verify
 ```
 
+> This is ran in Bitbucket Pipelines
+
 ## Testing this out on your machine.
 
 1. Download Jenkins, on a Mac you can do so via `brew install jenkins`
 2. Run the Jenkins server, on a Mac you can do so via `brew services start jenkins`
-3. Create a project with a repo that contains a `Jekninsfile`, a Jenkinsfile
-   coes with the [`Pipeline`](https://jenkins.io/doc/book/pipeline/) plugin.
-4. Install the NodeJS Plugin and enable it in the Manage Plugins section.
-5. When installing the NodeJS Plugin, configure it to install `yarn` as a
-   global dependency.
+3. Create a project with a repo that contains a `Jekninsfile` comes with the 
+   [`Pipeline`](https://jenkins.io/doc/book/pipeline/) plugin.
 
 ## Using the CryptoMove Tholos Jenkins Plugin
 
