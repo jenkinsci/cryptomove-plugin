@@ -32,23 +32,10 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         return name;
     }
 
-    public boolean isUseFrench() {
-        return useFrench;
-    }
-
-    @DataBoundSetter
-    public void setUseFrench(boolean useFrench) {
-        this.useFrench = useFrench;
-    }
-
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
-        if (useFrench) {
-            listener.getLogger().println("Bonjour, " + name + "!");
-        } else {
-            listener.getLogger().println("Hello, " + name + "!");
-        }
+        listener.getLogger().println("You are running the command, " + name + "!");
     }
 
     @Symbol("greet")
@@ -61,9 +48,6 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
                 return FormValidation.error(Messages.CryptoMoveBuilder_DescriptorImpl_errors_missingName());
             if (value.length() < 4)
                 return FormValidation.warning(Messages.CryptoMoveBuilder_DescriptorImpl_warnings_tooShort());
-            if (!useFrench && value.matches(".*[éáàç].*")) {
-                return FormValidation.warning(Messages.CryptoMoveBuilder_DescriptorImpl_warnings_reallyFrench());
-            }
             return FormValidation.ok();
         }
 
