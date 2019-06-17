@@ -18,13 +18,13 @@ import jenkins.tasks.SimpleBuildStep;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundSetter;
 
-public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
+public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
 
     private final String name;
     private boolean useFrench;
 
     @DataBoundConstructor
-    public HelloWorldBuilder(String name) {
+    public CryptoMoveBuilder(String name) {
         this.name = name;
     }
 
@@ -42,7 +42,8 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
     }
 
     @Override
-    public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
+    public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener)
+            throws InterruptedException, IOException {
         if (useFrench) {
             listener.getLogger().println("Bonjour, " + name + "!");
         } else {
@@ -57,11 +58,11 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         public FormValidation doCheckName(@QueryParameter String value, @QueryParameter boolean useFrench)
                 throws IOException, ServletException {
             if (value.length() == 0)
-                return FormValidation.error(Messages.HelloWorldBuilder_DescriptorImpl_errors_missingName());
+                return FormValidation.error(Messages.CryptoMoveBuilder_DescriptorImpl_errors_missingName());
             if (value.length() < 4)
-                return FormValidation.warning(Messages.HelloWorldBuilder_DescriptorImpl_warnings_tooShort());
+                return FormValidation.warning(Messages.CryptoMoveBuilder_DescriptorImpl_warnings_tooShort());
             if (!useFrench && value.matches(".*[éáàç].*")) {
-                return FormValidation.warning(Messages.HelloWorldBuilder_DescriptorImpl_warnings_reallyFrench());
+                return FormValidation.warning(Messages.CryptoMoveBuilder_DescriptorImpl_warnings_reallyFrench());
             }
             return FormValidation.ok();
         }
@@ -73,7 +74,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
         @Override
         public String getDisplayName() {
-            return Messages.HelloWorldBuilder_DescriptorImpl_DisplayName();
+            return Messages.CryptoMoveBuilder_DescriptorImpl_DisplayName();
         }
 
     }

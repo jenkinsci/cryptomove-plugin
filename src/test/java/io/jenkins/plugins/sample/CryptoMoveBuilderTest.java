@@ -10,7 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 
-public class HelloWorldBuilderTest {
+public class CryptoMoveBuilderTest {
 
     @Rule
     public JenkinsRule jenkins = new JenkinsRule();
@@ -20,20 +20,20 @@ public class HelloWorldBuilderTest {
     @Test
     public void testConfigRoundtrip() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        project.getBuildersList().add(new HelloWorldBuilder(name));
+        project.getBuildersList().add(new CryptoMoveBuilder(name));
         project = jenkins.configRoundtrip(project);
-        jenkins.assertEqualDataBoundBeans(new HelloWorldBuilder(name), project.getBuildersList().get(0));
+        jenkins.assertEqualDataBoundBeans(new CryptoMoveBuilder(name), project.getBuildersList().get(0));
     }
 
     @Test
     public void testConfigRoundtripFrench() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        HelloWorldBuilder builder = new HelloWorldBuilder(name);
+        CryptoMoveBuilder builder = new CryptoMoveBuilder(name);
         builder.setUseFrench(true);
         project.getBuildersList().add(builder);
         project = jenkins.configRoundtrip(project);
 
-        HelloWorldBuilder lhs = new HelloWorldBuilder(name);
+        CryptoMoveBuilder lhs = new CryptoMoveBuilder(name);
         lhs.setUseFrench(true);
         jenkins.assertEqualDataBoundBeans(lhs, project.getBuildersList().get(0));
     }
@@ -41,7 +41,7 @@ public class HelloWorldBuilderTest {
     @Test
     public void testBuild() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        HelloWorldBuilder builder = new HelloWorldBuilder(name);
+        CryptoMoveBuilder builder = new CryptoMoveBuilder(name);
         project.getBuildersList().add(builder);
 
         FreeStyleBuild build = jenkins.buildAndAssertSuccess(project);
@@ -52,7 +52,7 @@ public class HelloWorldBuilderTest {
     public void testBuildFrench() throws Exception {
 
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        HelloWorldBuilder builder = new HelloWorldBuilder(name);
+        CryptoMoveBuilder builder = new CryptoMoveBuilder(name);
         builder.setUseFrench(true);
         project.getBuildersList().add(builder);
 
@@ -65,10 +65,7 @@ public class HelloWorldBuilderTest {
         String agentLabel = "my-agent";
         jenkins.createOnlineSlave(Label.get(agentLabel));
         WorkflowJob job = jenkins.createProject(WorkflowJob.class, "test-scripted-pipeline");
-        String pipelineScript
-                = "node {\n"
-                + "  greet '" + name + "'\n"
-                + "}";
+        String pipelineScript = "node {\n" + "  greet '" + name + "'\n" + "}";
         job.setDefinition(new CpsFlowDefinition(pipelineScript, true));
         WorkflowRun completedBuild = jenkins.assertBuildStatusSuccess(job.scheduleBuild2(0));
         String expectedString = "Hello, " + name + "!";
