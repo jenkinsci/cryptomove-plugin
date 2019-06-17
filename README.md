@@ -15,7 +15,9 @@ mvn verify
 3. Package the app with `mvn package`. This should create the
    `target/cryptomove.hpi` file. This file can be uploaded into Jenkins
    configurations.
-4. This App contains a `Jenkinsfile` and can be used to set up the application.
+4. This App contains a `Jenkinsfile` and can be used to set up the
+   application. Add to Jenkins by creating a `newJob` at `/view/all/newJob` that
+   is a Pipeline project.
 
 5. Install the plugin via the Manage Plugin directory on `<JENKINS_URL>/manage`.
 6. Configure the Cryptomove Tholos plugin on `<JENKINS_URL>/configureTools`
