@@ -21,20 +21,19 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
 
     private final String name;
+    private final String token;
 
     @DataBoundConstructor
-    public CryptoMoveBuilder(String name) {
+    public CryptoMoveBuilder(String name, String token) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
+        this.token = token;
     }
 
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
         listener.getLogger().println("You are running the command: " + name);
+        listener.getLogger().println("You are using the token: " + token);
     }
 
     @Symbol("run_command")
@@ -44,6 +43,14 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         public FormValidation doCheckName(@QueryParameter String value) throws IOException, ServletException {
             if (value.length() == 0)
                 return FormValidation.error(Messages.CryptoMoveBuilder_DescriptorImpl_errors_missingName());
+            if (value.length() < 4)
+                return FormValidation.warning(Messages.CryptoMoveBuilder_DescriptorImpl_warnings_tooShort());
+            return FormValidation.ok();
+        }
+
+        public FormValidation doCheckToken(@QueryParameter String value) throws IOException, ServletException {
+            if (value.length() == 0)
+                return FormValidation.error(Messages.CryptoMoveBuilder_DescriptorImpl_errors_missingToken());
             if (value.length() < 4)
                 return FormValidation.warning(Messages.CryptoMoveBuilder_DescriptorImpl_warnings_tooShort());
             return FormValidation.ok();
