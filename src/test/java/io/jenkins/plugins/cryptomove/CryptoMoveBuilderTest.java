@@ -26,38 +26,13 @@ public class CryptoMoveBuilderTest {
     }
 
     @Test
-    public void testConfigRoundtripFrench() throws Exception {
-        FreeStyleProject project = jenkins.createFreeStyleProject();
-        CryptoMoveBuilder builder = new CryptoMoveBuilder(name);
-        builder.setUseFrench(true);
-        project.getBuildersList().add(builder);
-        project = jenkins.configRoundtrip(project);
-
-        CryptoMoveBuilder lhs = new CryptoMoveBuilder(name);
-        lhs.setUseFrench(true);
-        jenkins.assertEqualDataBoundBeans(lhs, project.getBuildersList().get(0));
-    }
-
-    @Test
     public void testBuild() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
         CryptoMoveBuilder builder = new CryptoMoveBuilder(name);
         project.getBuildersList().add(builder);
 
         FreeStyleBuild build = jenkins.buildAndAssertSuccess(project);
-        jenkins.assertLogContains("Hello, " + name, build);
-    }
-
-    @Test
-    public void testBuildFrench() throws Exception {
-
-        FreeStyleProject project = jenkins.createFreeStyleProject();
-        CryptoMoveBuilder builder = new CryptoMoveBuilder(name);
-        builder.setUseFrench(true);
-        project.getBuildersList().add(builder);
-
-        FreeStyleBuild build = jenkins.buildAndAssertSuccess(project);
-        jenkins.assertLogContains("Bonjour, " + name, build);
+        jenkins.assertLogContains("You are running the command: " + name, build);
     }
 
     @Test
@@ -65,10 +40,10 @@ public class CryptoMoveBuilderTest {
         String agentLabel = "my-agent";
         jenkins.createOnlineSlave(Label.get(agentLabel));
         WorkflowJob job = jenkins.createProject(WorkflowJob.class, "test-scripted-pipeline");
-        String pipelineScript = "node {\n" + "  greet '" + name + "'\n" + "}";
+        String pipelineScript = "node {\n" + "  run_command '" + name + "'\n" + "}";
         job.setDefinition(new CpsFlowDefinition(pipelineScript, true));
         WorkflowRun completedBuild = jenkins.assertBuildStatusSuccess(job.scheduleBuild2(0));
-        String expectedString = "Hello, " + name + "!";
+        String expectedString = "You are running the command: " + name;
         jenkins.assertLogContains(expectedString, completedBuild);
     }
 

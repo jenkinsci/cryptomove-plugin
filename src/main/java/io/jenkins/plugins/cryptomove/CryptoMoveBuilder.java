@@ -21,7 +21,6 @@ import org.kohsuke.stapler.DataBoundSetter;
 public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
 
     private final String name;
-    private boolean useFrench;
 
     @DataBoundConstructor
     public CryptoMoveBuilder(String name) {
@@ -35,15 +34,14 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
-        listener.getLogger().println("You are running the command, " + name + "!");
+        listener.getLogger().println("You are running the command: " + name);
     }
 
-    @Symbol("greet")
+    @Symbol("run_command")
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
-        public FormValidation doCheckName(@QueryParameter String value, @QueryParameter boolean useFrench)
-                throws IOException, ServletException {
+        public FormValidation doCheckName(@QueryParameter String value) throws IOException, ServletException {
             if (value.length() == 0)
                 return FormValidation.error(Messages.CryptoMoveBuilder_DescriptorImpl_errors_missingName());
             if (value.length() < 4)
