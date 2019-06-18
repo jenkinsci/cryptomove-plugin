@@ -10,6 +10,11 @@
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>cryptomove</artifactId>
     <version>0.1</version>
+    <scm>
+        <connection>scm:git:ssh://github.com/jenkinsci/cryptomove.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/cryptomove.git</developerConnection>
+        <url>https://github.com/jenkinsci/cryptomove</url>
+    </scm>
     <packaging>hpi</packaging>
     <properties>
         <!-- Baseline Jenkins version you use to build the plugin. Users must have this version or newer to run. -->
