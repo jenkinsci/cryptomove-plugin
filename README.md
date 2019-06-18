@@ -1,5 +1,7 @@
 # CryptoMove Plugin
 
+You can download this plugin from Jenkins.io
+
 ## Local Development
 
 ```
