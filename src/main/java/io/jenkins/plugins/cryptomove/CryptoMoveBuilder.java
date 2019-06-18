@@ -20,6 +20,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.apache.commons.io.IOUtils;
 import java.lang.ProcessBuilder;
+import java.lang.Process;
+import java.util.Map;
 import java.nio.charset.Charset;
 
 import jenkins.tasks.SimpleBuildStep;
@@ -57,7 +59,11 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
             listener.getLogger().println("You have the error: " + body);
         }
 
-        Process p = new ProcessBuilder("eval", "'" + name + "'").start();
+        ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", name);
+        Map<String, String> env = pb.environment();
+        env.put("u", "util/");
+        Process p = pb.start();
+
         String stderr = IOUtils.toString(p.getErrorStream(), Charset.defaultCharset());
         String stdout = IOUtils.toString(p.getInputStream(), Charset.defaultCharset());
 
