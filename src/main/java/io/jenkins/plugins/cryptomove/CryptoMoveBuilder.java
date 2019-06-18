@@ -16,6 +16,10 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import org.apache.commons.io.IOUtils;
+
 import jenkins.tasks.SimpleBuildStep;
 
 import org.jenkinsci.Symbol;
@@ -40,7 +44,15 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         con.setRequestMethod("POST");
         con.setRequestProperty("Authorizaton", token);
         int status = con.getResponseCode();
-        listener.getLogger().println("You have the status: " + status);
+        if (status < 300) {
+            InputStream inputStream = con.getInputStream();
+            String body = IOUtils.toString(inputStream, "UTF-8");
+            listener.getLogger().println("You have the status: " + body);
+        } else {
+            InputStream inputStream = con.getErrorStream();
+            String body = IOUtils.toString(inputStream, "UTF-8");
+            listener.getLogger().println("You have the error: " + body);
+        }
 
         listener.getLogger().println("You are running the command: " + name);
         listener.getLogger().println("You are using the token: " + token);
