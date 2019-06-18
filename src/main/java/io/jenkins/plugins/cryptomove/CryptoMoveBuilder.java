@@ -14,7 +14,10 @@ import org.kohsuke.stapler.QueryParameter;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import jenkins.tasks.SimpleBuildStep;
+
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundSetter;
 
@@ -32,6 +35,13 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
+        URL url = new URL("https://api.cryptomove.com/v1/user/secret/list_no_dup");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Authorizaton", token);
+        int status = con.getResponseCode();
+        listener.getLogger().println("You have the status: " + status);
+
         listener.getLogger().println("You are running the command: " + name);
         listener.getLogger().println("You are using the token: " + token);
     }
