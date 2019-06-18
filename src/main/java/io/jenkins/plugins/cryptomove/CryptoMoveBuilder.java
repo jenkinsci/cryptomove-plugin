@@ -74,7 +74,7 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         listener.getLogger().println("You are using the token: " + token);
     }
 
-    @Symbol("run_command")
+    @Symbol("cryptomove")
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
 
