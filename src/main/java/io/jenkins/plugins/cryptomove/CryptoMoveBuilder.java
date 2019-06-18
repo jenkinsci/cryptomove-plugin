@@ -19,6 +19,8 @@ import java.net.URL;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.apache.commons.io.IOUtils;
+import java.lang.ProcessBuilder;
+import java.nio.charset.Charset;
 
 import jenkins.tasks.SimpleBuildStep;
 
@@ -43,6 +45,7 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Authorizaton", token);
+        con.setRequestProperty("Content-Type", "application/json");
         int status = con.getResponseCode();
         if (status < 300) {
             InputStream inputStream = con.getInputStream();
@@ -53,6 +56,13 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
             String body = IOUtils.toString(inputStream, "UTF-8");
             listener.getLogger().println("You have the error: " + body);
         }
+
+        Process p = new ProcessBuilder("eval", "'" + name + "'").start();
+        String stderr = IOUtils.toString(p.getErrorStream(), Charset.defaultCharset());
+        String stdout = IOUtils.toString(p.getInputStream(), Charset.defaultCharset());
+
+        listener.getLogger().println("Standard Error " + stderr);
+        listener.getLogger().println("Standard Out " + stdout);
 
         listener.getLogger().println("You are running the command: " + name);
         listener.getLogger().println("You are using the token: " + token);
