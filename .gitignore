@@ -3,3 +3,5 @@ plugin/
 .classpath
 .factorypath
 .settings
+pom.xml.releaseBackup
+release.properties
