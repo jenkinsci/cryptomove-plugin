@@ -1,6 +1,6 @@
-# Tholos Jenkins Plugin
+# CryptoMove Plugin
 
-## Verify
+## Local Development
 
 ```
 mvn verify
