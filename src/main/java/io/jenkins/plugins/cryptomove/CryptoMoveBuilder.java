@@ -53,26 +53,25 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
             InputStream inputStream = con.getInputStream();
             String body = IOUtils.toString(inputStream, "UTF-8");
             listener.getLogger().println("You have the keys " + body);
-
-            ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", name);
-            Map<String, String> env = pb.environment();
-            env.put("CRYPTOMOVE", "token");
-            Process p = pb.start();
-
-            String stderr = IOUtils.toString(p.getErrorStream(), Charset.defaultCharset());
-            String stdout = IOUtils.toString(p.getInputStream(), Charset.defaultCharset());
-
-            listener.getLogger().println("Standard Error " + stderr);
-            listener.getLogger().println("Standard Out " + stdout);
-
-            listener.getLogger().println("You are running the command: " + name);
-            listener.getLogger().println("You are using the token: " + token);
-
         } else {
             InputStream inputStream = con.getErrorStream();
             String body = IOUtils.toString(inputStream, "UTF-8");
             listener.getLogger().println("there was an error with your request " + body);
         }
+
+        ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", name);
+        Map<String, String> env = pb.environment();
+        env.put("CRYPTOMOVE", "vault");
+        Process p = pb.start();
+
+        String stderr = IOUtils.toString(p.getErrorStream(), Charset.defaultCharset());
+        String stdout = IOUtils.toString(p.getInputStream(), Charset.defaultCharset());
+
+        listener.getLogger().println("Standard Error " + stderr);
+        listener.getLogger().println("Standard Out " + stdout);
+
+        listener.getLogger().println("You are running the command: " + name);
+        listener.getLogger().println("You are using the token: " + token);
     }
 
     @Symbol("cryptomove")
