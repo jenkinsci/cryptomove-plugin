@@ -1,2 +1,5 @@
 target/
 plugin/
+.classpath
+.factorypath
+.settings
