@@ -19,10 +19,9 @@
     <artifactId>cryptomove</artifactId>
     <version>0.1.2-SNAPSHOT</version>
     <scm>
-        <connection>scm:git:ssh://github.com/jenkinsci/cryptomove-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/cryptomove-plugin.git</developerConnection>
+        <connection>scm:git:https://github.com/jenkinsci/cryptomove-plugin.git</connection>
+        <developerConnection>scm:git:https://git@github.com/jenkinsci/cryptomove-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/cryptomove-plugin</url>
-      <tag>cryptomove-0.1.0</tag>
   </scm>
     <packaging>hpi</packaging>
     <properties>
