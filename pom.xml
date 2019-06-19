@@ -17,12 +17,12 @@
     </parent>
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>cryptomove</artifactId>
-    <version>0.1.13-SNAPSHOT</version>
+    <version>0.1.13</version>
     <scm>
         <connection>scm:git:ssh://github.com/jenkinsci/cryptomove-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jenkinsci/cryptomove-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/cryptomove-plugin</url>
-        <tag>HEAD</tag>
+        <tag>cryptomove-0.1.13</tag>
     </scm>
     <packaging>hpi</packaging>
     <properties>
