@@ -5,3 +5,4 @@ plugin/
 .settings
 pom.xml.releaseBackup
 release.properties
+.vscode/
