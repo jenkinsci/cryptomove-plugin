@@ -24,7 +24,7 @@ mvn verify
    Jenkins instance. On the `<JENKINS_URL>/manage` page you can upload a
    plugin at `/pluginManager/advanced`.
 
-4. From here, you can see the plugin by conifiguring a new `freestyle`
+4. From here, you can see the plugin by configuring a new `freestyle`
    project. In the build steps, you can see a new step for CryptoMove Tholos.
 
 ## Legal
