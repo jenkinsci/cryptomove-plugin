@@ -22,8 +22,10 @@ mvn verify
 4. From there we will need to install the CryptoMove plugin into your local
    Jenkins instance. On the `<JENKINS_URL>/manage` page you can upload a
    plugin at `/pluginManager/advanced`.
-5. From here, you can see the plugin by conifiguring a new `freestyle`
+5. From here, you can see the plugin by configuring a new `freestyle`
    project. In the build steps, you can see a new step for CryptoMove Tholos.
+
+## Dep
 
 ## Legal
 
