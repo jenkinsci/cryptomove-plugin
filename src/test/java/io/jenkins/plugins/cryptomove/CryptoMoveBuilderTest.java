@@ -2,10 +2,8 @@ package io.jenkins.plugins.cryptomove;
 
 import hudson.model.FreeStyleBuild;
 import hudson.model.FreeStyleProject;
-import hudson.model.Label;
-import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
-import org.jenkinsci.plugins.workflow.job.WorkflowJob;
-import org.jenkinsci.plugins.workflow.job.WorkflowRun;
+import hudson.model.Result;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
@@ -24,8 +22,8 @@ public class CryptoMoveBuilderTest {
         CryptoMoveBuilder builder = new CryptoMoveBuilder(name, token);
         project.getBuildersList().add(builder);
 
-        FreeStyleBuild build = jenkins.buildAndAssertSuccess(project);
-        jenkins.assertLogContains("You are running the command: " + name, build);
+        FreeStyleBuild build = project.scheduleBuild2(0).get();
+        jenkins.assertBuildStatus(Result.FAILURE, build);
     }
 
 }
