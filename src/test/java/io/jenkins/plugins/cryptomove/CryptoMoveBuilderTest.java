@@ -15,11 +15,12 @@ public class CryptoMoveBuilderTest {
 
     final String name = "Bobby";
     final String token = "token";
+    final String email = "rar@rar.com";
 
     @Test
     public void testBuild() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        CryptoMoveBuilder builder = new CryptoMoveBuilder(name, token);
+        CryptoMoveBuilder builder = new CryptoMoveBuilder(name, token, email);
         project.getBuildersList().add(builder);
 
         FreeStyleBuild build = project.scheduleBuild2(0).get();
