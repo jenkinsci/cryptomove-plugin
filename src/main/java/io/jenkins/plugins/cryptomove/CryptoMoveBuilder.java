@@ -30,11 +30,13 @@ import org.jenkinsci.Symbol;
 public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
 
     private final String name;
+    private final String email;
     private final String token;
 
     @DataBoundConstructor
-    public CryptoMoveBuilder(String name, String token) {
+    public CryptoMoveBuilder(String name, String token, String email) {
         this.name = name;
+        this.email = email;
         this.token = token;
     }
 
@@ -46,6 +48,7 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         con.setRequestMethod("POST");
         con.setRequestProperty("Authorizaton", token);
         con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("email", email);
         int status = con.getResponseCode();
         if (status < 300) {
             InputStream inputStream = con.getInputStream();
@@ -86,6 +89,14 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         }
 
         public FormValidation doCheckToken(@QueryParameter String value) throws IOException, ServletException {
+            if (value.length() == 0)
+                return FormValidation.error(Messages.CryptoMoveBuilder_DescriptorImpl_errors_missingToken());
+            if (value.length() < 4)
+                return FormValidation.warning(Messages.CryptoMoveBuilder_DescriptorImpl_warnings_tooShort());
+            return FormValidation.ok();
+        }
+
+        public FormValidation doCheckEmail(@QueryParameter String value) throws IOException, ServletException {
             if (value.length() == 0)
                 return FormValidation.error(Messages.CryptoMoveBuilder_DescriptorImpl_errors_missingToken());
             if (value.length() < 4)
