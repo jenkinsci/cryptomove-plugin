@@ -6,3 +6,11 @@ pipelines:
         name: Verify Maven build
         script:
           - mvn -e verify
+    - step:
+        name: Run Detect Secrets
+        image: python
+        max-time: 10
+        script:
+          - pip install detect-secrets
+          - detect-secrets scan --update .secrets.baseline
+          - detect-secrets audit .secrets.baseline
