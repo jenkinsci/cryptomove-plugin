@@ -29,7 +29,10 @@ mvn verify
 
 1. Load the SSH key responsible for pushing the plugin on GitHub. Log into
    Github.com with the right account.
-2. Test the plugin works by running the following command
+2. If necessary, re-clone the repo so other files in the `.gitignore` are not
+   affecting the version being published. The only version should be mentioned
+   in the `pom.xml` file.
+3. Test the plugin works by running the following command
 
 ```bash
 mvn clean package && mvn findbugs:check
