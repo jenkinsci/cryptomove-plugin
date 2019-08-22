@@ -27,7 +27,8 @@ mvn verify
 
 ## Releasing a new version
 
-1. Load the SSH key responsible for pushing the plugin on GitHub
+1. Load the SSH key responsible for pushing the plugin on GitHub. Log into
+   Github.com with the right account.
 2. Test the plugin works by running the following command
 
 ```bash
