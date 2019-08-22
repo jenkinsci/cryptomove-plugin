@@ -27,6 +27,8 @@ mvn verify
 
 ## Releasing a new version
 
+1. Log into Jenkins at accounts.jenknis.io
+
 ```bash
 mvn release:prepare release:perform -e -B -X
 ```
