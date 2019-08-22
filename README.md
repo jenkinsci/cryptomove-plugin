@@ -27,7 +27,14 @@ mvn verify
 
 ## Releasing a new version
 
-1. Log into Jenkins at accounts.jenknis.io
+1. Load the SSH key responsible for pushing the plugin on GitHub
+2. Test the plugin works by running the following command
+
+```bash
+mvn clean package && mvn findbugs:check
+```
+
+3. Run the following command
 
 ```bash
 mvn release:prepare release:perform -e -B -X
