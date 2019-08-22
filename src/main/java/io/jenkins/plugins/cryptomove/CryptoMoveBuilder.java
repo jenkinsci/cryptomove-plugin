@@ -57,7 +57,6 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
 
             ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", name);
             Map<String, String> env = pb.environment();
-            env.put("CRYPTOMOVE", "vault");
             Process p = pb.start();
 
             String stderr = IOUtils.toString(p.getErrorStream(), Charset.defaultCharset());
