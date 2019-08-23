@@ -50,13 +50,14 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         con.setRequestProperty("Authorizaton", token);
         con.setRequestProperty("Content-Type", "application/json; utf-8");
         con.setRequestProperty("Accept", "application/json");
-        String jsonInputString = "{\"email\": email}";
         con.setDoOutput(true);
+
+        String jsonInputString = "{\"email\": email}";
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.writeBytes(jsonInputString);
         wr.flush();
         wr.close();
-        con.setRequestProperty("email", email);
+
         int status = con.getResponseCode();
         if (status < 300) {
             InputStream inputStream = con.getInputStream();
