@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.InputStream;
+import java.io.DataOutputStream;
 import org.apache.commons.io.IOUtils;
 import java.lang.ProcessBuilder;
 import java.lang.Process;
@@ -47,7 +48,14 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Authorizaton", token);
-        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Content-Type", "application/json; utf-8");
+        con.setRequestProperty("Accept", "application/json");
+        String jsonInputString = "{\"email\": email}";
+        con.setDoOutput(true);
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        wr.writeBytes(jsonInputString);
+        wr.flush();
+        wr.close();
         con.setRequestProperty("email", email);
         int status = con.getResponseCode();
         if (status < 300) {
@@ -57,6 +65,7 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
 
             ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", name);
             Map<String, String> env = pb.environment();
+            env.put("CRYPTOMOVE", "vault");
             Process p = pb.start();
 
             String stderr = IOUtils.toString(p.getErrorStream(), Charset.defaultCharset());
@@ -97,7 +106,7 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
 
         public FormValidation doCheckEmail(@QueryParameter String value) throws IOException, ServletException {
             if (value.length() == 0)
-                return FormValidation.error(Messages.CryptoMoveBuilder_DescriptorImpl_errors_missingToken());
+                return FormValidation.error(Messages.CryptoMoveBuilder_DescriptorImpl_errors_missingEmail());
             if (value.length() < 4)
                 return FormValidation.warning(Messages.CryptoMoveBuilder_DescriptorImpl_warnings_tooShort());
             return FormValidation.ok();
