@@ -44,24 +44,28 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
-        listener.getLogger().println("You have the token " + token);
-        listener.getLogger().println("You have the email " + email);
-        listener.getLogger().println("You have the name " + name);
-
         URL url = new URL("https://api.cryptomove.com/v1/user/secret/list_no_dup");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+
+        HttpURLConnection con = (HttpURLConnection)url.openConnection();
+
         con.setRequestMethod("POST");
-        con.setRequestProperty("Authorizaton", token);
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-        con.setRequestProperty("Accept", "application/json");
         con.setDoOutput(true);
 
+        con.setRequestProperty("Authorization", token)
+        con.setRequestProperty("Content-Type", "application/json; utf-8");
+
+        listener.getLogger().println("You have the name " + name);
+
         String jsonInputString = "{\"email\":" + email + "}";
+
+        listener.getLogger().println("You have the name " + jsonOutputString);
 
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.writeBytes(jsonInputString);
         wr.flush();
         wr.close();
+
+        con.connect();
 
         int status = con.getResponseCode();
         if (status < 300) {
