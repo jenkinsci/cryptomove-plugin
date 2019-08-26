@@ -63,12 +63,12 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
 
         http.connect();
 
-        InputStream inputStream = http.getInputStream();
-        String body = IOUtils.toString(inputStream, "UTF-8");
-
         int status = http.getResponseCode();
 
         if (status < 300) {
+            InputStream inputStream = http.getInputStream();
+            String body = IOUtils.toString(inputStream, "UTF-8");
+
             listener.getLogger().println("You have the keys " + body);
 
             ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", name);
@@ -85,6 +85,9 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
             listener.getLogger().println("You are running the command: " + name);
             listener.getLogger().println("You are using the token: " + token);
         } else {
+            InputStream inputStream = http.getInputStream();
+            String body = IOUtils.toString(inputStream, "UTF-8");
+
             listener.getLogger().println("there was an error with your request " + body);
             throw new RuntimeException("there was an error in the request");
         }
