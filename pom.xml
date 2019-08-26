@@ -17,12 +17,12 @@
     </parent>
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>cryptomove</artifactId>
-    <version>0.1.32-SNAPSHOT</version>
+    <version>0.1.32</version>
     <scm>
         <connection>scm:git:ssh://github.com/jenkinsci/cryptomove-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jenkinsci/cryptomove-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/cryptomove-plugin</url>
-        <tag>HEAD</tag>
+        <tag>cryptomove-0.1.32</tag>
     </scm>
     <packaging>hpi</packaging>
     <properties>
@@ -98,14 +98,9 @@
             <version>2.5</version>
         </dependency>
         <dependency>
-            <groupId>javax.json</groupId>
-            <artifactId>javax.json-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.json</artifactId>
-            <version>1.1</version>
+            <version>1.1.4</version>
         </dependency>
     </dependencies>
     <repositories>
