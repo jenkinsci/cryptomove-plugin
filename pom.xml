@@ -100,7 +100,6 @@
         <dependency>
             <groupId>javax.json</groupId>
             <artifactId>javax.json-api</artifactId>
-            <scope>provided</scope>
             <version>1.0</version>
         </dependency>
     </dependencies>
