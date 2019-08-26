@@ -26,9 +26,9 @@ import java.nio.charset.Charset;
 
 import jenkins.tasks.SimpleBuildStep;
 
-import glassdoor.json.Json;
-import glassdoor.json.JsonObject;
-import glassdoor.json.JsonObjectBuilder;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 import org.jenkinsci.Symbol;
 
