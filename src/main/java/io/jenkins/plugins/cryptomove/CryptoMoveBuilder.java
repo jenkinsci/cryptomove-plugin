@@ -46,31 +46,29 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
             throws InterruptedException, IOException {
         URL url = new URL("https://api.cryptomove.com/v1/user/secret/list_no_dup");
 
-        HttpURLConnection con = (HttpURLConnection)url.openConnection();
+        HttpURLConnection http = (HttpURLConnection)url.openConnection();
 
-        con.setRequestMethod("POST");
-        con.setDoOutput(true);
+        http.setRequestMethod("POST");
+        http.setDoOutput(true);
 
-        con.setRequestProperty("Authorization", token);
-        con.setRequestProperty("Content-Type", "application/json; utf-8");
-
-        listener.getLogger().println("You have the name " + name);
+        http.setRequestProperty("Authorization", token);
+        http.setRequestProperty("Content-Type", "application/json");
 
         String jsonInputString = "{\"email\":" + email + "}";
 
-        listener.getLogger().println("You made it here");
-
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        DataOutputStream wr = new DataOutputStream(http.getOutputStream());
         wr.writeBytes(jsonInputString);
         wr.flush();
         wr.close();
 
-        con.connect();
+        http.connect();
 
-        int status = con.getResponseCode();
+        InputStream inputStream = http.getInputStream();
+        String body = IOUtils.toString(inputStream, "UTF-8");
+
+        int status = http.getResponseCode();
+
         if (status < 300) {
-            InputStream inputStream = con.getInputStream();
-            String body = IOUtils.toString(inputStream, "UTF-8");
             listener.getLogger().println("You have the keys " + body);
 
             ProcessBuilder pb = new ProcessBuilder("/bin/bash", "-c", name);
@@ -87,8 +85,6 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
             listener.getLogger().println("You are running the command: " + name);
             listener.getLogger().println("You are using the token: " + token);
         } else {
-            InputStream inputStream = con.getErrorStream();
-            String body = IOUtils.toString(inputStream, "UTF-8");
             listener.getLogger().println("there was an error with your request " + body);
             throw new RuntimeException("there was an error in the request");
         }
