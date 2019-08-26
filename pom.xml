@@ -97,6 +97,12 @@
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
         </dependency>
+        <dependency>
+            <groupId>javax.json</groupId>
+            <artifactId>javax.json-api</artifactId>
+            <scope>provided</scope>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>

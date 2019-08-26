@@ -26,6 +26,10 @@ import java.nio.charset.Charset;
 
 import jenkins.tasks.SimpleBuildStep;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+
 import org.jenkinsci.Symbol;
 
 public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
@@ -54,10 +58,13 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         http.setRequestProperty("Authorization", token);
         http.setRequestProperty("Content-Type", "application/json");
 
-        String jsonInputString = "{\"email\":" + email + "}";
+        JsonObject listNoDupJson = Json.createObjectBuilder().add("email", email).build();
+        String listNoDupBody = listNoDupJson.toString();
+
+        listener.getLogger().println("Sending the body " + listNoDupBody);
 
         DataOutputStream wr = new DataOutputStream(http.getOutputStream());
-        wr.writeBytes(jsonInputString);
+        wr.writeBytes(listNoDupBody);
         wr.flush();
         wr.close();
 
