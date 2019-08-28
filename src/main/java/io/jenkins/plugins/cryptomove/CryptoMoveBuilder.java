@@ -61,8 +61,6 @@ public class CryptoMoveBuilder extends Builder implements SimpleBuildStep {
         JsonObject listNoDupJson = Json.createObjectBuilder().add("email", email).build();
         String listNoDupBody = listNoDupJson.toString();
 
-        listener.getLogger().println("Sending the body " + listNoDupBody);
-
         DataOutputStream wr = new DataOutputStream(http.getOutputStream());
         wr.writeBytes(listNoDupBody);
         wr.flush();
